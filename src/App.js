@@ -1,21 +1,28 @@
 import './App.css';
+import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Log from "./components/Log";
+import AuthService from "./services/authService";
 
 function App() {
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (!user) {
+      AuthService.setCurrentUser();
+    }
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container mt-3">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/log" element={<Log />} />
+        </Routes>
+      </div>
     </div>
   );
 }
