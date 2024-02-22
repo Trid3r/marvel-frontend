@@ -112,6 +112,11 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setPageInfo(prevPageInfo => ({
+          ...prevPageInfo,
+          isLoading: true
+        }));
+
         const response = await HomeService.getAllCharacters({ offset: paginationModel.page * paginationModel.pageSize, limit: paginationModel.pageSize });
         setCharacters(response.data.results);
 
